@@ -1,3 +1,5 @@
+import Main.cleanString
+
 /**
   * Created by Administrator on 18/07/2017.
   */
@@ -5,14 +7,13 @@ object Main extends App {
   runMainMethod
 
   def runMainMethod = {
-    val userInput = "1234567898765432010456"
+    val userInput = "06"
     println(userInput)
     val length = userInput.length
     length match {
       case _ if length < 4 => {
-        println("Short scale" +
-          ": " + userInput + ".")
-        println("Long scale: " + userInput + ".")
+        println("Short scale: " + cleanString(userInput) + ".")
+        println("Long scale: " + cleanString(userInput) + ".")
       }
       case _ if length > 3 && length < 7 => {
         println("Short scale: " + getThousands(userInput.substring(0, length - 3)) + getHundreds(userInput.substring(length - 3)))
@@ -52,7 +53,7 @@ object Main extends App {
   }
 
   def getHundreds(input: String): String = {
-    if(cleanString(input).length() == 0) {
+    if(cleanString(input).length() == 0 || cleanString(input) == "0") {
       val toReturn = "."
       toReturn
     }
@@ -63,7 +64,7 @@ object Main extends App {
   }
 
   def getThousands(input: String): String = {
-    if(cleanString(input).length() != 0) {
+    if(cleanString(input).length() != 0 && cleanString(input) != "0") {
       val toReturn = cleanString(input) + " thousand "
       toReturn
     } else {
@@ -73,7 +74,7 @@ object Main extends App {
   }
 
   def getMillions(input: String): String = {
-    if(cleanString(input).length() != 0) {
+    if(cleanString(input).length() != 0 && cleanString(input) != "0") {
       val toReturn = cleanString(input) + " million, "
       toReturn
     } else {
@@ -83,7 +84,7 @@ object Main extends App {
   }
 
   def getBillions(input: String): String = {
-    if(cleanString(input).length() != 0) {
+    if(cleanString(input).length() != 0 && cleanString(input) != "0") {
       val toReturn = cleanString(input) + " billion, "
       toReturn
     } else {
@@ -93,7 +94,7 @@ object Main extends App {
   }
 
   def getMilliard(input: String): String = {
-    if(cleanString(input).length() != 0) {
+    if(cleanString(input).length() != 0 && cleanString(input) != "0") {
       val toReturn = cleanString(input) + " milliard, "
       toReturn
     } else {
@@ -103,7 +104,7 @@ object Main extends App {
   }
 
   def getTrillion(input: String): String = {
-    if(cleanString(input).length() != 0) {
+    if(cleanString(input).length() != 0 && cleanString(input) != "0") {
       val toReturn = cleanString(input) + " trillion, "
       toReturn
     } else {
@@ -112,7 +113,7 @@ object Main extends App {
     }
   }
   def getQuadrillion(input: String): String = {
-    if(cleanString(input).length() != 0) {
+    if(cleanString(input).length() != 0 && cleanString(input) != "0") {
       val toReturn = cleanString(input) + " quadrillion, "
       toReturn
     } else {
@@ -121,7 +122,7 @@ object Main extends App {
     }
   }
   def getBilliard(input: String): String = {
-    if(cleanString(input).length() != 0) {
+    if(cleanString(input).length() != 0 && cleanString(input) != "0") {
       val toReturn = cleanString(input) + " billiard, "
       toReturn
     } else {
@@ -130,7 +131,7 @@ object Main extends App {
     }
   }
   def getQuintillion(input: String): String = {
-    if(cleanString(input).length() != 0) {
+    if(cleanString(input).length() != 0 && cleanString(input) != "0") {
       val toReturn = cleanString(input) + " quintillion, "
       toReturn
     } else {
@@ -139,7 +140,7 @@ object Main extends App {
     }
   }
   def getSextillion(input: String): String = {
-    if(cleanString(input).length() != 0) {
+    if(cleanString(input).length() != 0 && cleanString(input) != "0") {
       val toReturn = cleanString(input) + " sextillion, "
       toReturn
     } else {
@@ -148,7 +149,7 @@ object Main extends App {
     }
   }
   def getTrilliard(input: String): String = {
-    if(cleanString(input).length() != 0) {
+    if(cleanString(input).length() != 0 && cleanString(input) != "0") {
       val toReturn = cleanString(input) + " Trilliard, "
       toReturn
     } else {
@@ -158,20 +159,33 @@ object Main extends App {
   }
 
   def cleanString(input: String): String = {
-    if(input.charAt(0) == '0') {
-      if(input.charAt(1) == '0') {
-        if(input.charAt(2) == '0') {
-          val toReturn = ""
-          toReturn
+    if(input.length == 3) {
+      if (input.charAt(0) == '0') {
+        if (input.charAt(1) == '0') {
+          if (input.charAt(2) == '0') {
+            val toReturn = ""
+            toReturn
+          } else {
+            val toReturn = input.charAt(2)
+            toReturn.toString()
+          }
         } else {
-          val toReturn = input.charAt(2)
-          toReturn.toString()
+          val toReturn = input.substring(1, 3)
+          toReturn
         }
-      } else {
-        val toReturn = input.substring(1, 3)
-        toReturn
+      } else input
+    } else {
+      if (input.length == 2) {
+        if(input.charAt(0) == '0') {
+          val toReturn = input.charAt(1).toString
+          toReturn
+        }
+        else input
+      } else{
+        if (input == '0') ""
+        else input
       }
-    } else input
+    }
   }
 }
 
